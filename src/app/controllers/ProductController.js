@@ -4,6 +4,7 @@ import Product from '../models/Product';
 
 class ProductController {
   async index(req, res) {
+    // get para pegar os produtos
     const list = await Product.findAll();
 
     return res.status(200).json(list);
@@ -13,6 +14,8 @@ class ProductController {
     const schema = Yup.object().shape({
       id: Yup.string().required(),
       title: Yup.string().required(),
+      description: Yup.string().required(),
+      price: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {

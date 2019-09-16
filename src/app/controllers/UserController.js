@@ -12,7 +12,7 @@ class UserController {
         .required()
         .min(6),
     });
-
+    // validacoes do user
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
@@ -33,6 +33,7 @@ class UserController {
     });
   }
 
+  // metodo para fazer atualizacoes do usuario
   async update(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string(),
