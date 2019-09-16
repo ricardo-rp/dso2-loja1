@@ -4,6 +4,7 @@ import authConfig from '../../config/auth';
 import User from '../models/User';
 
 class SessionController {
+  // logar com o usuario
   async store(req, res) {
     const schema = Yup.object().shape({
       email: Yup.string()
@@ -11,24 +12,25 @@ class SessionController {
         .required(),
       password: Yup.string().required(),
     });
-
+    // erro de verificacao dados invalidos
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
     const { email, password } = req.body;
-
+    // checando email
     const user = await User.findOne({ where: { email } });
-
+    // nao existe o user no banco error
     if (!user) {
       return res.status(401).json({ error: 'User not found' });
-    }
+    } // senha errada
     if (!(await user.checkPassword(password))) {
       return res.status(401).json({ error: 'Password does not match' });
     }
 
     const { id, name } = user;
 
+    // caso de sucesso ao logar ele retorna na requisicao os dados + token
     return res.json({
       user: {
         id,

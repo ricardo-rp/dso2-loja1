@@ -48,14 +48,14 @@ class UserController {
         password ? field.required().oneOf([Yup.ref('password')]) : field
       ),
     });
-
+    // se os dados de validacao estiver incorreto devolve um 400 error
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
     // verificacao se email e senha antiga ja foram colocados
     const { email, oldPassword } = req.body;
-
+    // fazendo verificacao de dados ja existentes (email, senha antiga)
     const user = await User.findByPk(req.userId);
 
     if (email !== user.email) {
@@ -68,7 +68,7 @@ class UserController {
     if (oldPassword && !(await user.checkPassword(oldPassword))) {
       return res.status(401).json({ error: 'Password does not match' });
     }
-
+    // atualizando dados com os dados verificados e retornando o update
     const { id, name, provider } = await user.update(req.body);
 
     return res.status(200).json({
