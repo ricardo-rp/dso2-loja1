@@ -6,7 +6,7 @@ module.exports = {
   database: 'loja1',
   define: {
     timestamp: true,
-    underscored: true,
+    underscored: true, // padrao de tabela
     underscoredAll: true,
   },
 };
