@@ -29,7 +29,6 @@ class SessionController {
     }
 
     const { id, name } = user;
-
     // caso de sucesso ao logar ele retorna na requisicao os dados + token
     return res.json({
       user: {
